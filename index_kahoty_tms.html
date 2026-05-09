@@ -1,0 +1,547 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Kahoty TMS — TMS d'exécution transport terrain</title>
+  <meta name="description" content="Kahoty TMS est une solution d'exécution transport terrain pour piloter les ordres de transport, la planification, le suivi live, les incidents, le POD et le parc." />
+  <style>
+    :root {
+      --bg: #f5f7fb;
+      --card: #ffffff;
+      --text: #182033;
+      --muted: #5f6b7a;
+      --primary: #0f766e;
+      --primary-dark: #115e59;
+      --accent: #f59e0b;
+      --border: #e2e8f0;
+      --shadow: 0 16px 40px rgba(15, 23, 42, 0.08);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .container {
+      width: min(1120px, 92%);
+      margin: auto;
+    }
+
+    header {
+      background: #ffffff;
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+
+    .nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 16px 0;
+      gap: 24px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 800;
+      font-size: 20px;
+    }
+
+    .logo {
+      width: 42px;
+      height: 42px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, var(--primary), #14b8a6);
+      display: grid;
+      place-items: center;
+      color: white;
+      font-weight: 900;
+      box-shadow: var(--shadow);
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 18px;
+      font-size: 14px;
+      color: var(--muted);
+    }
+
+    .hero {
+      padding: 72px 0 44px;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 34px;
+      align-items: center;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 12px;
+      border: 1px solid #b2dfdb;
+      background: #ecfdf5;
+      color: var(--primary-dark);
+      border-radius: 999px;
+      font-size: 14px;
+      font-weight: 700;
+      margin-bottom: 18px;
+    }
+
+    h1 {
+      font-size: clamp(34px, 5vw, 58px);
+      line-height: 1.08;
+      margin: 0 0 20px;
+      letter-spacing: -1.5px;
+    }
+
+    .lead {
+      font-size: 19px;
+      color: var(--muted);
+      max-width: 720px;
+      margin-bottom: 28px;
+    }
+
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      margin-bottom: 22px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 14px 20px;
+      border-radius: 14px;
+      font-weight: 800;
+      border: 1px solid transparent;
+    }
+
+    .btn-primary {
+      background: var(--primary);
+      color: white;
+    }
+
+    .btn-secondary {
+      background: white;
+      border-color: var(--border);
+      color: var(--text);
+    }
+
+    .note {
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .mockup {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 28px;
+      box-shadow: var(--shadow);
+      padding: 18px;
+    }
+
+    .mockup-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 14px;
+    }
+
+    .dots {
+      display: flex;
+      gap: 6px;
+    }
+
+    .dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: #cbd5e1;
+    }
+
+    .status-pill {
+      font-size: 12px;
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: #fef3c7;
+      color: #92400e;
+      font-weight: 800;
+    }
+
+    .dashboard {
+      display: grid;
+      gap: 12px;
+    }
+
+    .screen-card {
+      border-radius: 18px;
+      background: #f8fafc;
+      border: 1px solid var(--border);
+      padding: 14px;
+    }
+
+    .screen-card strong {
+      display: block;
+      margin-bottom: 5px;
+    }
+
+    .bar {
+      width: 100%;
+      height: 10px;
+      border-radius: 999px;
+      background: #e2e8f0;
+      overflow: hidden;
+      margin-top: 10px;
+    }
+
+    .bar span {
+      display: block;
+      height: 100%;
+      background: var(--primary);
+    }
+
+    section {
+      padding: 44px 0;
+    }
+
+    .section-title {
+      font-size: 34px;
+      line-height: 1.15;
+      margin: 0 0 12px;
+      letter-spacing: -0.7px;
+    }
+
+    .section-subtitle {
+      color: var(--muted);
+      margin: 0 0 28px;
+      max-width: 760px;
+      font-size: 17px;
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 18px;
+    }
+
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 22px;
+      padding: 22px;
+      box-shadow: 0 10px 30px rgba(15, 23, 42, 0.05);
+    }
+
+    .icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 14px;
+      display: grid;
+      place-items: center;
+      background: #ecfdf5;
+      color: var(--primary-dark);
+      font-size: 22px;
+      margin-bottom: 12px;
+    }
+
+    h3 {
+      margin: 0 0 8px;
+      font-size: 20px;
+    }
+
+    .card p {
+      color: var(--muted);
+      margin: 0;
+    }
+
+    .flow {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 12px;
+    }
+
+    .step {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 18px;
+      text-align: center;
+      box-shadow: 0 10px 25px rgba(15, 23, 42, 0.04);
+    }
+
+    .step-number {
+      width: 34px;
+      height: 34px;
+      margin: 0 auto 10px;
+      border-radius: 50%;
+      background: var(--primary);
+      color: white;
+      display: grid;
+      place-items: center;
+      font-weight: 900;
+    }
+
+    .cta {
+      background: linear-gradient(135deg, var(--primary-dark), var(--primary));
+      color: white;
+      border-radius: 30px;
+      padding: 36px;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      align-items: center;
+      gap: 22px;
+      box-shadow: var(--shadow);
+    }
+
+    .cta h2 {
+      margin: 0 0 8px;
+      font-size: 32px;
+      line-height: 1.15;
+    }
+
+    .cta p {
+      margin: 0;
+      color: #d1fae5;
+    }
+
+    .cta .btn {
+      background: white;
+      color: var(--primary-dark);
+      white-space: nowrap;
+    }
+
+    footer {
+      padding: 34px 0;
+      color: var(--muted);
+      text-align: center;
+      font-size: 14px;
+    }
+
+    @media (max-width: 900px) {
+      .hero-grid,
+      .grid-3,
+      .grid-2,
+      .flow,
+      .cta {
+        grid-template-columns: 1fr;
+      }
+
+      .nav {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+
+      .nav-links {
+        flex-wrap: wrap;
+      }
+
+      .hero {
+        padding-top: 46px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container nav">
+      <a class="brand" href="#top" aria-label="Kahoty TMS">
+        <span class="logo">KT</span>
+        <span>Kahoty TMS</span>
+      </a>
+      <nav class="nav-links" aria-label="Navigation principale">
+        <a href="#fonctionnalites">Fonctionnalités</a>
+        <a href="#cycle">Cycle métier</a>
+        <a href="#secteurs">Secteurs</a>
+        <a href="#contact">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="top">
+    <section class="hero">
+      <div class="container hero-grid">
+        <div>
+          <div class="badge">🚚 TMS d'exécution transport terrain</div>
+          <h1>Pilotez vos opérations transport de bout en bout.</h1>
+          <p class="lead">
+            Kahoty TMS aide les équipes logistiques à gérer les ordres de transport, la planification, le suivi live,
+            les incidents, le POD et le parc depuis une solution simple, claire et orientée terrain.
+          </p>
+          <div class="actions">
+            <a class="btn btn-primary" href="mailto:yvesyanice.kouassi@utbci.net?subject=Demande%20de%20démo%20Kahoty%20TMS">Demander une démo</a>
+            <a class="btn btn-secondary" href="#fonctionnalites">Voir les fonctionnalités</a>
+          </div>
+          <p class="note">Contact : yvesyanice.kouassi@utbci.net</p>
+        </div>
+
+        <div class="mockup" aria-label="Aperçu illustratif Kahoty TMS">
+          <div class="mockup-top">
+            <div class="dots"><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>
+            <span class="status-pill">Mission en cours</span>
+          </div>
+          <div class="dashboard">
+            <div class="screen-card">
+              <strong>OT-2026-001 — Transport ciment</strong>
+              <span>Abidjan → Yamoussoukro</span>
+              <div class="bar"><span style="width: 68%"></span></div>
+            </div>
+            <div class="screen-card">
+              <strong>Planification</strong>
+              <span>Véhicule, chauffeur, remorque et contraintes validés.</span>
+            </div>
+            <div class="screen-card">
+              <strong>Tour de contrôle</strong>
+              <span>Approche • Chargement • Route • Livraison • POD</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="fonctionnalites">
+      <div class="container">
+        <h2 class="section-title">Fonctionnalités principales</h2>
+        <p class="section-subtitle">
+          Une solution centrée sur l'exécution opérationnelle : voir clairement, affecter les bons moyens,
+          suivre le terrain et décider rapidement.
+        </p>
+
+        <div class="grid-3">
+          <div class="card">
+            <div class="icon">📄</div>
+            <h3>Ordres de transport</h3>
+            <p>Création et suivi des demandes : client, origine, destination, marchandise, quantité et contraintes.</p>
+          </div>
+          <div class="card">
+            <div class="icon">🗓️</div>
+            <h3>Planification OT</h3>
+            <p>Affectation du véhicule, du chauffeur, de la remorque, des dates et des contraintes métier.</p>
+          </div>
+          <div class="card">
+            <div class="icon">📡</div>
+            <h3>Tableau live</h3>
+            <p>Vue des missions actives, statuts opérationnels, avancement et informations utiles à l'exploitation.</p>
+          </div>
+          <div class="card">
+            <div class="icon">🎛️</div>
+            <h3>Tour de contrôle</h3>
+            <p>Pilotage terrain, alertes, chronologie, événements et décisions opérationnelles.</p>
+          </div>
+          <div class="card">
+            <div class="icon">⚠️</div>
+            <h3>Incidents terrain</h3>
+            <p>Gestion des pannes, retards, immobilisations, actions correctives et besoin de remplacement.</p>
+          </div>
+          <div class="card">
+            <div class="icon">✅</div>
+            <h3>POD & suivi parc</h3>
+            <p>Preuve de livraison, retour base, disponibilité des moyens, garage et immobilisations.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="cycle">
+      <div class="container">
+        <h2 class="section-title">Cycle métier couvert</h2>
+        <p class="section-subtitle">
+          Kahoty TMS suit un parcours proche du quotidien des exploitants et responsables logistiques.
+        </p>
+        <div class="flow">
+          <div class="step">
+            <div class="step-number">1</div>
+            <strong>Référentiels</strong><br />
+            Clients, sites, chauffeurs, véhicules, remorques.
+          </div>
+          <div class="step">
+            <div class="step-number">2</div>
+            <strong>Ordre de transport</strong><br />
+            Qui, quoi, où, quand et combien.
+          </div>
+          <div class="step">
+            <div class="step-number">3</div>
+            <strong>Planification</strong><br />
+            Moyen, conducteur, dates et compatibilité.
+          </div>
+          <div class="step">
+            <div class="step-number">4</div>
+            <strong>Exécution live</strong><br />
+            Approche, chargement, route et livraison.
+          </div>
+          <div class="step">
+            <div class="step-number">5</div>
+            <strong>Contrôle</strong><br />
+            Incidents, POD, retour base et feedback.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="secteurs">
+      <div class="container">
+        <h2 class="section-title">Pour quels métiers ?</h2>
+        <p class="section-subtitle">
+          Kahoty TMS s'adresse aux organisations qui doivent piloter des opérations transport terrain au quotidien.
+        </p>
+        <div class="grid-2">
+          <div class="card">
+            <h3>Utilisateurs ciblés</h3>
+            <p>Responsables logistiques, exploitants, planificateurs, gestionnaires de parc, responsables flotte et superviseurs terrain.</p>
+          </div>
+          <div class="card">
+            <h3>Secteurs concernés</h3>
+            <p>Transport routier, distribution, BTP, hydrocarbures, gaz, marchandises générales, flotte interne et affrètement.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact">
+      <div class="container">
+        <div class="cta">
+          <div>
+            <h2>Vous souhaitez tester Kahoty TMS ?</h2>
+            <p>Demandez une démo et testez le cycle transport avec vos propres cas métier.</p>
+          </div>
+          <a class="btn" href="mailto:yvesyanice.kouassi@utbci.net?subject=Demande%20de%20démo%20Kahoty%20TMS">Demander une démo</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">
+      © 2026 Kahoty TMS — TMS d'exécution transport terrain. Tous droits réservés.
+    </div>
+  </footer>
+</body>
+</html>
